@@ -1,0 +1,18 @@
+#!/bin/sh
+echo "=== HubbleOS Initramfs ==="
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devtmpfs devtmpfs /dev
+mkdir -p /dev/pts
+mount -t devpts devpts /dev/pts
+
+export PATH=/usr/local/bin:/usr/bin:/bin:/sbin:/usr/sbin
+export HOME=/root
+export SHELL=/bin/sh
+
+echo ""
+echo "Bem-vindo ao HubbleOS!"
+echo "Digite 'help' para comandos disponíveis"
+echo ""
+
+exec /bin/sh

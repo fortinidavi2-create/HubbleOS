@@ -1,0 +1,223 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                         HubbleOS - Project Status                          ║
+║                                                                            ║
+║  Projeto: Distribuição Linux Personalizada "HubbleOS"                     ║
+║  Data: Dezembro 2024                                                      ║
+║  Status: ESTRUTURA PRONTA PARA BUILD                                      ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+✓ COMPONENTES COMPLETADOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[✓] Shell hbsh
+    └─ Compilado: /workspaces/HubbleOS/tools/hbsh/hbsh
+    └─ Funcionalidades:
+       • cd <dir> - trocar diretório
+       • pwd - mostrar diretório
+       • help - mostrar comandos
+       • exit - sair
+       • Execução de binários do sistema
+    └─ Tamanho: ~50KB
+
+[✓] Gerenciador de Pacotes (hbk)
+    └─ Script Python: /workspaces/HubbleOS/tools/hbk.py
+    └─ Funcionalidades:
+       • init - inicializar
+       • install - instalar .tar.gz ou via Nix
+       • list - listar pacotes
+       • remove - remover pacote
+    └─ Suporta: tar.gz locais + Nix (se instalado)
+
+[✓] Scripts de Build
+    └─ build_kernel.sh - Compila Linux Kernel
+    └─ create_initramfs.sh - Cria sistema raiz
+    └─ build_iso.sh - Gera ISO bootável
+
+[✓] Documentação
+    └─ README.md - Visão geral
+    └─ BUILD_GUIDE.md - Guia passo a passo
+    └─ PKG_MANAGER_GUIDE.md - Como usar hbk
+    └─ PROJECT_STATUS.txt - Este arquivo
+
+[✓] Kernel Linux
+    └─ Presente: /workspaces/HubbleOS/linux
+    └─ Tamanho: ~7.6GB
+    └─ Pronto para: defconfig → make → vmlinuz
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 PRÓXIMAS ETAPAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1] COMPILAR KERNEL (30-60 minutos)
+    $ bash /workspaces/HubbleOS/scripts/build_kernel.sh
+    
+    Resultado: /workspaces/HubbleOS/build/kernel/vmlinuz
+
+[2] CRIAR INITRAMFS (~5 minutos)
+    $ bash /workspaces/HubbleOS/scripts/create_initramfs.sh
+    
+    Resultado: /workspaces/HubbleOS/build/initramfs.cpio.gz
+
+[3] GERAR ISO (5-10 minutos)
+    $ bash /workspaces/HubbleOS/scripts/build_iso.sh
+    
+    Resultado: /workspaces/HubbleOS/build/hubbleos.iso
+
+[Atalho] Compilar tudo de uma vez:
+    $ cd /workspaces/HubbleOS && make all
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📁 ESTRUTURA DO PROJETO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+HubbleOS/
+├── README.md                    ← Leia isto primeiro
+├── BUILD_GUIDE.md              ← Instruções completas
+├── PKG_MANAGER_GUIDE.md        ← Como usar hbk
+├── PROJECT_STATUS.txt          ← Este arquivo
+├── Makefile                    ← make all | make clean
+│
+├── linux/                      ← Kernel Linux (~7.6GB)
+│   ├── arch/
+│   ├── kernel/
+│   ├── drivers/
+│   ├── fs/
+│   └── ... (estrutura padrão do kernel)
+│
+├── tools/
+│   ├── hbsh/                   ← Shell Personalizado
+│   │   ├── hbsh               ✓ (Compilado 50KB)
+│   │   ├── hbsh.c
+│   │   └── Makefile
+│   └── hbk.py                 ← Gerenciador de Pacotes
+│
+├── scripts/
+│   ├── build_kernel.sh        ← Compila kernel
+│   ├── create_initramfs.sh    ← Cria sistema raiz
+│   ├── build_iso.sh           ← Gera ISO
+│   └── create_example_package.sh
+│
+├── build/                      ← Saídas do build
+│   ├── kernel/
+│   │   ├── vmlinuz
+│   │   ├── System.map
+│   │   └── kernel.config
+│   ├── initramfs.cpio.gz
+│   ├── iso_stage/
+│   └── hubbleos.iso
+│
+└── packages/                   ← Pacotes customizados
+    └── example-tools.tar.gz
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🛠️  FERRAMENTAS INCLUÍDAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Via BusyBox (automaticamente incluído):
+  • sh, ls, cat, echo, pwd, cd, mkdir, mount, umount, kill
+  • Mais de 300 comandos disponíveis
+
+Via hbk (package manager):
+  • git, gcc, curl, vim
+  • Nix (gerenciador de pacotes do NixOS)
+  • Pacotes customizados em tar.gz
+
+Pré-compilados no initramfs:
+  • hbsh (shell personalizado)
+  • BusyBox (ferramentas Unix)
+  • Bibliotecas essenciais (libc, libm)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚙️  REQUISITOS DO SISTEMA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Mínimo:
+  • Linux host (Ubuntu, Debian, CentOS, etc)
+  • gcc, make, binutils
+  • 20GB espaço livre em disco
+
+Recomendado:
+  • 4+ cores CPU
+  • 8GB+ RAM
+  • grub-mkrescue ou xorriso
+  • qemu (para testar a ISO)
+
+Instalação (Ubuntu/Debian):
+  $ sudo apt-get update
+  $ sudo apt-get install gcc make binutils grub-pc xorriso qemu-system
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 TESTES RÁPIDOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Testar shell hbsh:
+  $ /workspaces/HubbleOS/tools/hbsh/hbsh
+  hbsh:/root$ pwd
+  hbsh:/root$ help
+  hbsh:/root$ exit
+
+Testar gerenciador hbk:
+  $ python3 /workspaces/HubbleOS/tools/hbk.py init
+  $ python3 /workspaces/HubbleOS/tools/hbk.py list
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 NOTAS IMPORTANTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Compilação do Kernel
+   - Primeira compilação leva 30-60 minutos
+   - Usa defconfig padrão para x86_64
+   - Para customizar, edite scripts/build_kernel.sh
+
+2. Espaço em Disco
+   - Kernel + build = ~25GB
+   - ISO final = 500MB - 1GB
+   - Limpar com: make clean
+
+3. Gerenciador de Pacotes (hbk)
+   - Suporta tar.gz locais
+   - Suporta Nix (se instalado no host)
+   - Pacotes vão para: /opt/hubble/packages/
+
+4. Ferramentas Faltantes
+   - git, gcc, curl, vim disponíveis via:
+     • BusyBox (versões minimais)
+     • Nix package manager
+     • Compilar e copiar manualmente
+
+5. Próximas Customizações
+   - Adicionar drivers específicos: editar kernel .config
+   - Incluir programas customizados: copiar para build/initramfs
+   - Trocar shell padrão: editar scripts/create_initramfs.sh
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📞 SUPORTE & TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Erro ao compilar hbsh:
+  $ cd tools/hbsh && make clean && make
+
+Erro ao compilar kernel:
+  $ cd linux && make mrproper && make defconfig && make
+
+Erro ao gerar ISO:
+  $ sudo apt-get install xorriso grub-pc
+
+Espaço em disco insuficiente:
+  $ make clean
+  $ cd linux && make tinyconfig  # Minimal config
+
+Testar ISO com QEMU:
+  $ qemu-system-x86_64 -cdrom build/hubbleos.iso -m 512
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Tudo pronto! Comece com: bash /workspaces/HubbleOS/scripts/build_kernel.sh
+
